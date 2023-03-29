@@ -12,7 +12,7 @@ class InternalClient:
     CONNECTION_RETRY_COUNT = 2
     SEND_RETRY_COUNT = 2
 
-    MODULE_ID = 0 
+    MODULE_ID = 0
 
     CONNECT_RESPONSE_EXCEPTIONS = {
         1: exceptions.AlreadyConnected,
@@ -70,6 +70,7 @@ class InternalClient:
         device.deviceType = self.device_type
         device.deviceName = self.device_name
         device.deviceRole = self.device_role
+        device.priority = self.device_priority
 
         self._device_message = device
 
@@ -144,7 +145,6 @@ class InternalClient:
         dconnect_msg = internalProto.DeviceConnect()
 
         dconnect_msg.device.CopyFrom(self._device_message)
-        dconnect_msg.priority = self.device_priority
 
         return dconnect_msg.SerializeToString()
 
