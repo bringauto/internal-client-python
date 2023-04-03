@@ -14,7 +14,7 @@ class Request:
         return self._retrieve()
 
     def _send(self) -> None:
-        message_header = struct.pack(">I", len(self.message))
+        message_header = struct.pack("<I", len(self.message))
         self.header_len = len(message_header)
         request_message = message_header + self.message
 
@@ -36,7 +36,7 @@ class Request:
                 f"Expected {self.header_len}, got {len(response_buff)} Bytes"
             )
 
-        expected_response_len = struct.unpack(">I", response_buff[: self.header_len])[0]
+        expected_response_len = struct.unpack("<I", response_buff[: self.header_len])[0]
         response_buff = response_buff[self.header_len :]
 
         retrieved = len(response_buff)
