@@ -126,9 +126,12 @@ class InternalClient:
         req = Request(self.client_socket, DeviceConnect_msg)
         response = req.send_request()
 
-        DeviceResponse_msg = internalProto.DeviceConnectResponse.FromString(response)
+        InternalServer_msg = internalProto.InternalServer.FromString(response)
+        if not InternalServer_msg.HasField("deviceConnectResponse"):
+            self.log.error(f"InternalServer message missing in DeviceConnectResponse")
+            raise exceptions.CommunicationError("Invalid InternalServer message")
         try:
-            response_type = DeviceResponse_msg.responseType
+            response_type = InternalServer_msg.deviceConnectResponse.responseType
         except AttributeError:
             self.log.error(f"responseType missing in DeviceConnectResponse")
             raise exceptions.CommunicationError("Invalid DeviceConnectResponse message")
@@ -143,17 +146,20 @@ class InternalClient:
 
     def _create_DeviceConnect_message(self) -> bytes:
         dconnect_msg = internalProto.DeviceConnect()
-
         dconnect_msg.device.CopyFrom(self._device_message)
+        msg = internalProto.InternalClient()
+        msg.deviceConnect.CopyFrom(dconnect_msg)
 
-        return dconnect_msg.SerializeToString()
+        return msg.SerializeToString()
 
     def _create_DeviceStatus_message(self, status_data: bytes) -> bytes:
         status = internalProto.DeviceStatus()
         status.device.CopyFrom(self._device_message)
         status.statusData = status_data
+        msg = internalProto.InternalClient()
+        msg.deviceStatus.CopyFrom(status)
 
-        return status.SerializeToString()
+        return msg.SerializeToString()
 
     def send_status(self, data: bytes, timeout: int) -> None:
         """Send device status (blocking). If status was not sent
@@ -214,8 +220,11 @@ class InternalClient:
             self.destroy()
             raise last_exception
 
-        command = internalProto.DeviceCommand.FromString(command_res)
-        self.current_command = command.commandData
+        InternalServer_msg = internalProto.InternalServer.FromString(command_res)
+        if not InternalServer_msg.HasField("deviceCommand"):
+            self.log.error(f"InternalServer message missing in DeviceCommand")
+            raise exceptions.CommunicationError("Invalid InternalServer message")
+        self.current_command = InternalServer_msg.deviceCommand.commandData
 
     def get_command(self) -> bytes:
         """Get last available command.
