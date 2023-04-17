@@ -175,7 +175,7 @@ class InternalClient:
             ValueError: Negative timeout
             Any of exceptions.CommunicationExceptions: Error occured in communication and
                 connection was not reestablished
-            Any of exceptions.ConnectExceptions: Server din't allow device to connect
+            Any of exceptions.ConnectExceptions: Server didn't allow device to connect
         """
         if self.client_socket is None:
             raise exceptions.ContextAlreadyDestroyed
