@@ -8,9 +8,9 @@ from .request import Request
 
 class InternalClient:
 
-    CONNECTION_TIMEOUT = 4
-    CONNECTION_RETRY_COUNT = 2
-    SEND_RETRY_COUNT = 2
+    CONNECTION_TIMEOUT = 1
+    CONNECTION_RETRY_COUNT = 1
+    SEND_RETRY_COUNT = 1
 
     MODULE_ID = 0
 
