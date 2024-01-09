@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "internal_client"
+version = "1.0.0"
+license = {file = "LICENSE"}
+
+description = "Implementation of Internal client library for fleet protocol v2."
+dependencies = [
+    "protobuf"
+]
+authors = [{name = "BringAuto", email = "fleet@bringauto.com"},]
+maintainers = [{name = "BringAuto", email = "fleet@bringauto.com"},]
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+]
+
+readme="README.md"
+
+[project.urls]
+homepage = "https://github.com/bringauto/internal-client-python/"
+

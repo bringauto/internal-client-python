@@ -3,7 +3,4 @@ __all__ = (
     "InternalClient"
 )
 
-from .client_lib import InternalClient
-from .client_lib import exceptions
-
-
+from .InternalClient import InternalClient, exceptions
