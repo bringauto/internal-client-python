@@ -33,7 +33,7 @@ class Request:
 
         if len(response_buff) < self.header_len:
             raise exceptions.CommunicationError(
-                f"Expected {self.header_len}, got {len(response_buff)} Bytes"
+                f"Expected {self.header_len}, got {len(response_buff)} Bytes."
             )
 
         expected_response_len = struct.unpack("<I", response_buff[: self.header_len])[0]
@@ -52,7 +52,7 @@ class Request:
 
         if retrieved != expected_response_len:
             raise exceptions.CommunicationError(
-                f"Expected {expected_response_len}, got {retrieved} Bytes"
+                f"Expected {expected_response_len}, got {retrieved} Bytes."
             )
 
         return response_buff
