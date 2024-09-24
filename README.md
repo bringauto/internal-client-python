@@ -16,7 +16,7 @@ source .venv/bin/activate
 ```
 You can get install the internal client as a python package by running
 ```bash
-pip install git+https://github.com/bringauto/internal-client-python.git@BAF-705/internal-client-as-package
+pip install git+https://github.com/bringauto/internal-client-python.git@master
 ```
 
 ## Usage
